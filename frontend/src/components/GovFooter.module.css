@@ -1,0 +1,93 @@
+.footer {
+  margin-top: auto;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-light);
+}
+
+/* Logo Strip */
+.logoStrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.logoItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.logoItem:hover { opacity: 1; }
+
+.logoIcon { font-size: 18px; }
+
+.logoName {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+
+/* Tricolor bar */
+.tricolor {
+  display: flex;
+  height: 4px;
+}
+
+.triSaffron { flex: 1; background: #ff9933; }
+.triWhite { flex: 1; background: #ffffff; }
+.triGreen { flex: 1; background: #138808; }
+
+/* Info */
+.info {
+  padding: 18px 28px;
+  text-align: center;
+}
+
+.infoText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.infoSub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.links a {
+  font-size: 11px;
+  color: var(--primary-500);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.links a:hover {
+  color: var(--primary-700);
+  text-decoration: underline;
+}
+
+.links span {
+  color: var(--border-medium);
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .logoStrip { gap: 16px; padding: 12px 16px; }
+  .info { padding: 14px 16px; }
+}

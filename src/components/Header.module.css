@@ -1,0 +1,148 @@
+/* ─── Government of India Top Bar ─── */
+.govBar {
+  background: var(--bg-gov-bar);
+  color: white;
+  font-size: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.govBarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.govLeft { display: flex; align-items: center; gap: 10px; }
+
+.flagIcon {
+  display: flex;
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+.fSaffron { flex: 1; background: #ff9933; }
+.fWhite { flex: 1; background: #ffffff; }
+.fGreen { flex: 1; background: #138808; }
+
+.govText { font-weight: 600; letter-spacing: 0.3px; font-size: 12px; white-space: nowrap; }
+
+.govRight { display: flex; align-items: center; gap: 8px; }
+
+.govLink { color: rgba(255,255,255,0.8); font-size: 11px; transition: color var(--transition-fast); }
+.govLink:hover { color: white; }
+
+.govDivider { color: rgba(255,255,255,0.3); font-size: 11px; }
+
+/* ─── Font Size Controls ─── */
+.fontGroup { display: flex; gap: 2px; }
+.fontBtn {
+  color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 600;
+  padding: 2px 6px; border-radius: var(--radius-xs);
+  border: 1px solid transparent; transition: all var(--transition-fast);
+}
+.fontBtn:hover { background: rgba(255,255,255,0.15); color: white; }
+.fontBtnActive { background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.4); }
+
+/* ─── Language Selector — UMANG style ─── */
+.langWrap { position: relative; }
+
+.langBtn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border: 1px solid rgba(255,255,255,0.4);
+  border-radius: var(--radius-xs); color: white;
+  font-size: 11px; font-weight: 700;
+  background: transparent; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.langBtn:hover { background: rgba(255,255,255,0.15); }
+
+.langMenu {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+  min-width: 130px; z-index: 999; overflow: hidden;
+  animation: menuIn 0.15s var(--ease-out);
+}
+
+.langItem {
+  display: block; width: 100%; text-align: left;
+  padding: 8px 14px; font-size: 13px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  transition: all var(--transition-fast);
+}
+.langItem:last-child { border-bottom: none; }
+.langItem:hover { background: var(--primary-50); color: var(--primary-600); }
+.langItemActive { color: var(--primary-600); font-weight: 700; background: var(--primary-50); }
+
+@keyframes menuIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Dark/Light Theme Toggle — UMANG style ─── */
+.themeToggle {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: var(--radius-xs); color: white;
+  cursor: pointer; background: transparent;
+  transition: all var(--transition-fast);
+}
+.themeToggle:hover { background: rgba(255,255,255,0.15); }
+
+/* ─── Main Header ─── */
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 38px;
+  z-index: 50;
+}
+
+.left { display: flex; align-items: center; gap: 16px; }
+
+.title { font-size: 20px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px; }
+.subtitle { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
+
+.right { display: flex; align-items: center; gap: 10px; }
+.syncBtn { gap: 6px; }
+
+.iconBtn {
+  position: relative; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light); border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+.iconBtn:hover { background: var(--bg-muted); color: var(--primary-600); border-color: var(--primary-200); }
+
+.notifDot {
+  position: absolute; top: 5px; right: 5px;
+  width: 7px; height: 7px;
+  background: var(--danger); border-radius: 50%;
+  border: 1.5px solid var(--bg-card);
+}
+
+@media (max-width: 1024px) { .govText { display: none; } }
+
+@media (max-width: 768px) {
+  .govBarInner { padding: 6px 12px; }
+  .header { padding: 12px 16px; top: 36px; }
+  .title { font-size: 17px; }
+  .govRight { gap: 5px; }
+  .langBtn span { display: none; }
+}
+
+@media (max-width: 480px) {
+  .fontGroup { display: none; }
+  .govLink { display: none; }
+}

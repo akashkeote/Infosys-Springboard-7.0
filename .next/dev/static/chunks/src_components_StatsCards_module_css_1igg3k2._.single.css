@@ -1,0 +1,102 @@
+/* [project]/src/components/StatsCards.module.css [app-client] (css) */
+.StatsCards-module__Hu6NqW__grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  display: grid;
+}
+
+.StatsCards-module__Hu6NqW__card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  animation: StatsCards-module__Hu6NqW__fadeIn .5s var(--ease-out) backwards;
+  transition: all var(--transition-base);
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  display: flex;
+}
+
+.StatsCards-module__Hu6NqW__card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.StatsCards-module__Hu6NqW__iconWrap {
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
+  display: flex;
+}
+
+.StatsCards-module__Hu6NqW__cardContent {
+  flex-direction: column;
+  min-width: 0;
+  display: flex;
+}
+
+.StatsCards-module__Hu6NqW__value {
+  letter-spacing: -.5px;
+  font-family: Outfit, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.StatsCards-module__Hu6NqW__label {
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.StatsCards-module__Hu6NqW__skeletonIcon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+}
+
+.StatsCards-module__Hu6NqW__skeletonValue {
+  width: 50px;
+  height: 26px;
+  margin-bottom: 6px;
+}
+
+.StatsCards-module__Hu6NqW__skeletonLabel {
+  width: 80px;
+  height: 13px;
+}
+
+@keyframes StatsCards-module__Hu6NqW__fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .StatsCards-module__Hu6NqW__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .StatsCards-module__Hu6NqW__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .StatsCards-module__Hu6NqW__value {
+    font-size: 22px;
+  }
+}
+
+/*# sourceMappingURL=src_components_StatsCards_module_css_1igg3k2._.single.css.map*/

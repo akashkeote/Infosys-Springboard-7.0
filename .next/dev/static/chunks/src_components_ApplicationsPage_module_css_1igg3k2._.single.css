@@ -1,0 +1,846 @@
+/* [project]/src/components/ApplicationsPage.module.css [app-client] (css) */
+.ApplicationsPage-module__0hXNRa__container {
+  animation: ApplicationsPage-module__0hXNRa__fadeIn .4s var(--ease-out);
+}
+
+.ApplicationsPage-module__0hXNRa__statsRow {
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__statChip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  min-width: 120px;
+  box-shadow: var(--shadow-sm);
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__statCount {
+  color: var(--chip-color);
+  font-family: Outfit;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.ApplicationsPage-module__0hXNRa__statLabel {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__filterTabs {
+  border-bottom: 2px solid var(--border-light);
+  gap: 4px;
+  margin-bottom: 18px;
+  padding-bottom: 0;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__filterTab {
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-bottom: 2px solid #0000;
+  margin-bottom: -2px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__filterTab:hover {
+  color: var(--primary-600);
+  background: var(--primary-50);
+}
+
+.ApplicationsPage-module__0hXNRa__activeTab {
+  color: var(--primary-600);
+  border-bottom-color: var(--primary-500);
+  background: var(--primary-50);
+}
+
+.ApplicationsPage-module__0hXNRa__list {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  animation: ApplicationsPage-module__0hXNRa__slideUp .4s var(--ease-out) backwards;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__card:hover {
+  border-color: var(--primary-200);
+  box-shadow: var(--shadow-md);
+  transform: translateX(2px);
+}
+
+.ApplicationsPage-module__0hXNRa__progressRing {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  position: relative;
+}
+
+.ApplicationsPage-module__0hXNRa__ringText {
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  position: absolute;
+  inset: 0;
+}
+
+.ApplicationsPage-module__0hXNRa__cardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.ApplicationsPage-module__0hXNRa__cardHeader {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__appId {
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__statusBadge {
+  border-radius: var(--radius-full);
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.ApplicationsPage-module__0hXNRa__cardTitle {
+  color: var(--text-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.ApplicationsPage-module__0hXNRa__cardMeta {
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__miniWorkflow {
+  align-items: center;
+  gap: 0;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__miniStep {
+  align-items: center;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__miniDot {
+  border: 2px solid var(--border-medium);
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+}
+
+.ApplicationsPage-module__0hXNRa__dot_completed {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.ApplicationsPage-module__0hXNRa__dot_in_progress {
+  background: #d97706;
+  border-color: #d97706;
+  animation: 1.5s infinite ApplicationsPage-module__0hXNRa__pulse;
+}
+
+.ApplicationsPage-module__0hXNRa__dot_rejected {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.ApplicationsPage-module__0hXNRa__dot_pending {
+  background: none;
+}
+
+.ApplicationsPage-module__0hXNRa__miniLine {
+  background: var(--border-light);
+  width: 24px;
+  height: 2px;
+}
+
+.ApplicationsPage-module__0hXNRa__lineComplete {
+  background: #16a34a;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectionPreview {
+  color: #dc2626;
+  border-radius: var(--radius-sm);
+  background: #fee2e2;
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.ApplicationsPage-module__0hXNRa__cardRight {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 100px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__amount {
+  color: var(--primary-700);
+  white-space: nowrap;
+  font-family: Outfit;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreBar {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreLabel {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreMeter {
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+  width: 80px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreFill {
+  border-radius: var(--radius-full);
+  height: 100%;
+  transition: width .8s var(--ease-out);
+}
+
+.ApplicationsPage-module__0hXNRa__scoreValue {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ApplicationsPage-module__0hXNRa__overlay {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  background: #1e114573;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: .2s ease-out ApplicationsPage-module__0hXNRa__overlayIn;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.ApplicationsPage-module__0hXNRa__modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 750px;
+  max-height: 88vh;
+  box-shadow: var(--shadow-xl);
+  animation: ApplicationsPage-module__0hXNRa__modalIn .3s var(--ease-out);
+  border: 1px solid var(--border-light);
+  flex-direction: column;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__modalHeader {
+  border-bottom: 1px solid var(--border-light);
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 22px 22px 14px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__modalHeaderTop {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__modalAppId {
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ApplicationsPage-module__0hXNRa__closeBtn {
+  border-radius: var(--radius-md);
+  width: 32px;
+  height: 32px;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__closeBtn:hover {
+  background: var(--bg-muted);
+  color: var(--primary-600);
+}
+
+.ApplicationsPage-module__0hXNRa__modalBody {
+  flex: 1;
+  padding: 18px 22px;
+  overflow-y: auto;
+}
+
+.ApplicationsPage-module__0hXNRa__infoGrid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  display: grid;
+}
+
+.ApplicationsPage-module__0hXNRa__infoItem {
+  background: var(--bg-muted);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.ApplicationsPage-module__0hXNRa__infoLabel {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  display: block;
+}
+
+.ApplicationsPage-module__0hXNRa__infoValue {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreBarLg {
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+  width: 100%;
+  height: 10px;
+  margin-top: 4px;
+  position: relative;
+}
+
+.ApplicationsPage-module__0hXNRa__scoreFillLg {
+  border-radius: var(--radius-full);
+  height: 100%;
+  transition: width 1s var(--ease-out);
+}
+
+.ApplicationsPage-module__0hXNRa__scoreText {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  position: absolute;
+  top: -16px;
+  right: 0;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectionCard {
+  border-radius: var(--radius-lg);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  margin-bottom: 20px;
+  padding: 16px;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectionHeader {
+  color: #dc2626;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectionText {
+  color: #7f1d1d;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectionOfficer {
+  color: #991b1b;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineTitle {
+  border-bottom: 1px solid var(--border-light);
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineTitle svg {
+  color: var(--primary-500);
+}
+
+.ApplicationsPage-module__0hXNRa__timeline {
+  flex-direction: column;
+  gap: 0;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineItem {
+  gap: 14px;
+  min-height: 70px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineActive {
+  background: var(--primary-50);
+  border-radius: var(--radius-md);
+  margin: -4px -8px;
+  padding: 4px 8px;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineLine {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  width: 30px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineDot {
+  border: 2px solid var(--border-medium);
+  width: 28px;
+  height: 28px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: 50%;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__dotCompleted {
+  color: #fff;
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.ApplicationsPage-module__0hXNRa__dotActive {
+  background: var(--primary-500);
+  border-color: var(--primary-500);
+  color: #fff;
+  animation: 2s infinite ApplicationsPage-module__0hXNRa__pulseGlow;
+}
+
+.ApplicationsPage-module__0hXNRa__dotRejected {
+  color: #fff;
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.ApplicationsPage-module__0hXNRa__dotPending {
+  background: var(--bg-muted);
+}
+
+.ApplicationsPage-module__0hXNRa__timelineConnector {
+  background: var(--border-light);
+  flex: 1;
+  width: 2px;
+  min-height: 20px;
+}
+
+.ApplicationsPage-module__0hXNRa__connectorDone {
+  background: #16a34a;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineContent {
+  flex: 1;
+  padding-bottom: 16px;
+}
+
+.ApplicationsPage-module__0hXNRa__timelineHeader {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__stageName {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ApplicationsPage-module__0hXNRa__stageRole {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__officerInfo {
+  margin-bottom: 4px;
+}
+
+.ApplicationsPage-module__0hXNRa__officerName {
+  color: var(--primary-700);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__officerDesg {
+  color: var(--text-muted);
+  font-size: 11px;
+  display: block;
+}
+
+.ApplicationsPage-module__0hXNRa__stageRemarks {
+  color: var(--text-secondary);
+  background: var(--bg-muted);
+  border-radius: var(--radius-sm);
+  margin: 4px 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ApplicationsPage-module__0hXNRa__remarksRejected {
+  color: #991b1b;
+  background: #fee2e2;
+  font-weight: 600;
+}
+
+.ApplicationsPage-module__0hXNRa__stageDate {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__overlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__modalIn {
+  from {
+    opacity: 0;
+    transform: scale(.96)translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1)translateY(0);
+  }
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}
+
+@keyframes ApplicationsPage-module__0hXNRa__pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 #7c3aed4d;
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px #7c3aed00;
+  }
+}
+
+@media (max-width: 768px) {
+  .ApplicationsPage-module__0hXNRa__statsRow {
+    gap: 8px;
+  }
+
+  .ApplicationsPage-module__0hXNRa__statChip {
+    min-width: unset;
+    flex: 1;
+  }
+
+  .ApplicationsPage-module__0hXNRa__card {
+    flex-wrap: wrap;
+  }
+
+  .ApplicationsPage-module__0hXNRa__cardRight {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .ApplicationsPage-module__0hXNRa__infoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.ApplicationsPage-module__0hXNRa__roleBar {
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-lg);
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__roleBadge {
+  color: var(--primary-700);
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__actionButtons {
+  gap: 6px;
+  margin-top: 8px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__approveBtn, .ApplicationsPage-module__0hXNRa__rejectBtn {
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.ApplicationsPage-module__0hXNRa__approveBtn {
+  color: #16a34a;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+}
+
+.ApplicationsPage-module__0hXNRa__approveBtn:hover {
+  color: #fff;
+  background: #16a34a;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectBtn {
+  color: #dc2626;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+}
+
+.ApplicationsPage-module__0hXNRa__rejectBtn:hover {
+  color: #fff;
+  background: #dc2626;
+}
+
+.ApplicationsPage-module__0hXNRa__actionModal {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-xl);
+  animation: ApplicationsPage-module__0hXNRa__modalIn .3s var(--ease-out);
+  border: 1px solid var(--border-light);
+}
+
+.ApplicationsPage-module__0hXNRa__actionModalHeader {
+  border-bottom: 1px solid var(--border-light);
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__actionModalHeader h3 {
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__actionModalBody {
+  padding: 18px 20px;
+}
+
+.ApplicationsPage-module__0hXNRa__actionAppInfo {
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ApplicationsPage-module__0hXNRa__actionLabel {
+  color: var(--text-primary);
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__actionTextarea {
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  width: 100%;
+  color: var(--text-primary);
+  background: var(--bg-muted);
+  transition: border-color var(--transition-fast);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.ApplicationsPage-module__0hXNRa__actionTextarea:focus {
+  border-color: var(--primary-400);
+  outline: none;
+}
+
+.ApplicationsPage-module__0hXNRa__actionFooter {
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  display: flex;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmApprove {
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: #fff;
+  transition: all var(--transition-fast);
+  background: #16a34a;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmApprove:hover {
+  background: #15803d;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmApprove:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmReject {
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: #fff;
+  transition: all var(--transition-fast);
+  background: #dc2626;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmReject:hover {
+  background: #b91c1c;
+}
+
+.ApplicationsPage-module__0hXNRa__confirmReject:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/*# sourceMappingURL=src_components_ApplicationsPage_module_css_1igg3k2._.single.css.map*/

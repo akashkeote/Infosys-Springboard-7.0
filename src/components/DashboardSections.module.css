@@ -1,0 +1,220 @@
+/* ─── Shared Section Styles ─── */
+.section { margin-top: 32px; margin-bottom: 36px; animation: fadeIn 0.5s ease backwards; }
+
+.sectionTitle {
+  font-size: 17px; font-weight: 700; color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+}
+
+.sectionHeaderRow {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+}
+
+.sectionHeaderRow .sectionTitle { margin-bottom: 0; }
+
+.alertCount {
+  font-size: 11px; font-weight: 700; color: #dc2626;
+  background: #fee2e2; padding: 3px 10px; border-radius: var(--radius-full);
+}
+
+/* ─── Quick Links Grid ─── */
+.quickGrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
+}
+
+.quickCard {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: var(--bg-card);
+  border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+  transition: all var(--transition-base); text-decoration: none;
+}
+
+.quickCard:hover {
+  border-color: var(--primary-200); box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.quickIcon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-muted); color: var(--primary-500); flex-shrink: 0;
+}
+
+.quickInfo { flex: 1; min-width: 0; }
+.quickName { font-size: 13px; font-weight: 700; color: var(--text-primary); display: block; }
+.quickDesc { font-size: 11px; color: var(--text-muted); }
+.quickArrow { color: var(--text-muted); flex-shrink: 0; opacity: 0; transition: all var(--transition-fast); }
+.quickCard:hover .quickArrow { opacity: 1; color: var(--primary-500); }
+
+/* ─── Fraud Alerts ─── */
+.alertList { display: flex; flex-direction: column; gap: 6px; }
+
+.alertItem {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; background: var(--bg-card);
+  border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+  transition: all var(--transition-base); cursor: pointer;
+}
+
+.alertItem:hover { border-color: var(--primary-200); box-shadow: var(--shadow-sm); }
+.alertLeft { padding-top: 2px; flex-shrink: 0; }
+.alertBody { flex: 1; min-width: 0; }
+.alertHeader { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+.alertTitle { font-size: 13px; font-weight: 600; color: var(--text-primary); flex: 1; line-height: 1.4; }
+
+.alertBadge {
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: var(--radius-full); flex-shrink: 0; white-space: nowrap;
+}
+
+.alertDesc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 4px; }
+.alertDate { font-size: 10px; color: var(--text-muted); }
+.alertArrow { color: var(--text-muted); flex-shrink: 0; margin-top: 4px; }
+
+/* ─── FAQ Accordion ─── */
+.faqList {
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); overflow: hidden;
+}
+
+.faqItem { border-bottom: 1px solid var(--border-light); }
+.faqItem:last-child { border-bottom: none; }
+
+.faqQuestion {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; font-size: 13px; font-weight: 600;
+  color: var(--text-primary); text-align: left;
+  transition: all var(--transition-fast); gap: 12px;
+}
+
+.faqQuestion:hover { background: var(--bg-muted); }
+
+.faqChevron { transition: transform var(--transition-fast); flex-shrink: 0; color: var(--text-muted); }
+.faqOpen .faqChevron { transform: rotate(180deg); color: var(--primary-500); }
+.faqOpen .faqQuestion { color: var(--primary-600); background: var(--bg-muted); }
+
+.faqAnswer {
+  padding: 0 18px 16px; font-size: 13px; color: var(--text-secondary);
+  line-height: 1.7; animation: slideDown 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .quickGrid { grid-template-columns: 1fr; }
+}
+
+/* ─── Section Sub Tag ─── */
+.sectionSubTag {
+  margin-left: auto;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-muted); font-style: italic;
+}
+
+/* ─── UMANG-style 3D Flip Category Cards ─── */
+.flipGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding-top: 4px;
+}
+
+.flipCol {
+  background-color: transparent;
+  perspective: 1000px;
+}
+
+.flipCard {
+  position: relative;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  height: 112px;
+}
+
+/* Flip on hover — UMANG pattern */
+.flipCol:hover .flipCard {
+  transform: rotateY(180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* Front face */
+.flipFront {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.flipIconWrap {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.flipFrontBody { flex: 1; min-width: 0; }
+.flipName { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.flipNameHi { font-size: 11px; color: var(--text-muted); margin: 1px 0 4px; }
+.flipCount { font-size: 12px; font-weight: 700; }
+.flipArrow { color: var(--text-muted); flex-shrink: 0; }
+
+/* Back face */
+.flipBack {
+  transform: rotateY(180deg);
+}
+
+.flipBackInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 16px;
+  height: 100%;
+}
+
+.flipBackName {
+  font-size: 14px; font-weight: 700;
+  color: white; margin: 6px 0 4px;
+}
+
+.flipBackDesc {
+  font-size: 11px; color: rgba(255,255,255,0.85);
+  line-height: 1.5; flex: 1;
+}
+
+.flipBackCount {
+  font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin-top: 6px;
+}
+
+@media (max-width: 1024px) {
+  .flipGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .flipGrid { grid-template-columns: 1fr; }
+  .flipCard { height: auto; min-height: 80px; }
+}

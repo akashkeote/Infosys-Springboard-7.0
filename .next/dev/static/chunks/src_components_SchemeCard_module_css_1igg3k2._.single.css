@@ -1,0 +1,173 @@
+/* [project]/src/components/SchemeCard.module.css [app-client] (css) */
+.SchemeCard-module__oiecxq__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  animation: SchemeCard-module__oiecxq__slideUp .4s var(--ease-out) backwards;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.SchemeCard-module__oiecxq__card:before {
+  content: "";
+  background: var(--primary-500);
+  opacity: 0;
+  width: 3px;
+  transition: opacity var(--transition-fast);
+  border-radius: 0 2px 2px 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.SchemeCard-module__oiecxq__card:hover {
+  border-color: var(--primary-200);
+  box-shadow: var(--shadow-md);
+  transform: translateX(2px);
+}
+
+.SchemeCard-module__oiecxq__card:hover:before {
+  opacity: 1;
+}
+
+.SchemeCard-module__oiecxq__card.SchemeCard-module__oiecxq__expired {
+  opacity: .65;
+}
+
+.SchemeCard-module__oiecxq__card.SchemeCard-module__oiecxq__expired:before {
+  background: var(--text-muted);
+}
+
+.SchemeCard-module__oiecxq__card.SchemeCard-module__oiecxq__expired:hover {
+  border-color: var(--border-medium);
+}
+
+.SchemeCard-module__oiecxq__iconWrap {
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  display: flex;
+}
+
+.SchemeCard-module__oiecxq__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.SchemeCard-module__oiecxq__title {
+  color: var(--text-primary);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.SchemeCard-module__oiecxq__meta {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.SchemeCard-module__oiecxq__metaItem {
+  color: var(--text-muted);
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  display: inline-flex;
+}
+
+.SchemeCard-module__oiecxq__metaItem svg {
+  flex-shrink: 0;
+}
+
+.SchemeCard-module__oiecxq__statusRow {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  display: flex;
+}
+
+.SchemeCard-module__oiecxq__rightCol {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  gap: 3px;
+  min-width: 90px;
+  display: flex;
+}
+
+.SchemeCard-module__oiecxq__amount {
+  color: var(--primary-700);
+  white-space: nowrap;
+  font-family: Outfit, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.SchemeCard-module__oiecxq__deadline {
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.SchemeCard-module__oiecxq__arrow {
+  color: var(--text-muted);
+  opacity: 0;
+  transition: all var(--transition-fast);
+  transform: translateX(-4px);
+}
+
+.SchemeCard-module__oiecxq__card:hover .SchemeCard-module__oiecxq__arrow {
+  opacity: 1;
+  color: var(--primary-500);
+  transform: translateX(0);
+}
+
+@keyframes SchemeCard-module__oiecxq__slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .SchemeCard-module__oiecxq__card {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .SchemeCard-module__oiecxq__rightCol {
+    border-top: 1px solid var(--border-light);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 8px;
+  }
+
+  .SchemeCard-module__oiecxq__arrow {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=src_components_SchemeCard_module_css_1igg3k2._.single.css.map*/

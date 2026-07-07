@@ -1,0 +1,67 @@
+/* [project]/src/components/AnalyticsCharts.module.css [app-client] (css) */
+.AnalyticsCharts-module__L3SZNW__grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  display: grid;
+}
+
+.AnalyticsCharts-module__L3SZNW__fullWidth {
+  grid-column: 1 / -1;
+}
+
+.AnalyticsCharts-module__L3SZNW__chartCard {
+  padding: 24px;
+  animation: .5s ease-out backwards AnalyticsCharts-module__L3SZNW__fadeIn;
+}
+
+.AnalyticsCharts-module__L3SZNW__chartTitle {
+  color: var(--text-primary);
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+}
+
+.AnalyticsCharts-module__L3SZNW__chartTitle svg {
+  color: var(--primary-500);
+}
+
+.AnalyticsCharts-module__L3SZNW__chartWrap {
+  width: 100%;
+}
+
+.AnalyticsCharts-module__L3SZNW__tooltip {
+  background: var(--bg-sidebar);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #a78bfa26;
+  padding: 10px 14px;
+}
+
+.AnalyticsCharts-module__L3SZNW__tooltipLabel {
+  color: var(--text-muted);
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.AnalyticsCharts-module__L3SZNW__tooltipValue {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.AnalyticsCharts-module__L3SZNW__empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 60px 20px;
+}
+
+@media (max-width: 1024px) {
+  .AnalyticsCharts-module__L3SZNW__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=src_components_AnalyticsCharts_module_css_1igg3k2._.single.css.map*/

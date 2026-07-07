@@ -1,0 +1,131 @@
+.footer {
+  margin-top: auto;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-light);
+  overflow: hidden;
+}
+
+/* ─── Marquee Track ─── */
+.logoTrack {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  /* Fade mask on both edges */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.logoInner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+/* Pause on hover */
+.logoTrack:hover .logoInner {
+  animation-play-state: paused;
+}
+
+.logoItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 28px;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+  cursor: default;
+  white-space: nowrap;
+  border-right: 1px solid var(--border-light);
+}
+
+.logoItem:last-child { border-right: none; }
+
+.logoItem:hover { opacity: 1; }
+
+.logoName {
+  font-family: 'DM Sans', 'Noto Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+}
+
+/* Continuous left-scroll marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Tricolor bar */
+.tricolor {
+  display: flex;
+  height: 4px;
+}
+
+.triSaffron { flex: 1; background: #ff9933; }
+.triWhite   { flex: 1; background: #ffffff; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
+.triGreen   { flex: 1; background: #138808; }
+
+/* Info section */
+.info {
+  padding: 18px 28px;
+  text-align: center;
+}
+
+.infoText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 0;
+}
+
+.infoSub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.links a {
+  font-size: 11px;
+  color: var(--primary-500);
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.links a:hover {
+  color: var(--primary-700);
+  text-decoration: underline;
+}
+
+.links span {
+  color: var(--border-medium);
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .logoItem { padding: 6px 16px; }
+  .info { padding: 14px 16px; }
+}

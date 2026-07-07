@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8080/api";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://infosys-springboard-7-0.onrender.com/api";
 
 /**
  * Fetch schemes with optional filters

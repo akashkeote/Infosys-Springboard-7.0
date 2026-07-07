@@ -362,7 +362,7 @@ export default function Dashboard() {
         <div className={styles.errorCard}>
           <div className={styles.errorIcon}>!</div>
           <h3>Backend Unavailable</h3>
-          <p>Make sure the Spring Boot backend is running on port 8080.</p>
+          <p>The server is currently waking up from sleep mode (Free Tier) or is unreachable.</p>
           <code className={styles.errorCode}>{error}</code>
           <button className="btn btn-primary btn-sm" style={{ marginTop: 12 }} onClick={() => loadSchemes()}>Retry</button>
         </div>

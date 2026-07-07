@@ -37,8 +37,14 @@ const getNavItems = (role) => {
   return base;
 };
 
-export default function Sidebar({ activeTab, onTabChange, user }) {
+export default function Sidebar({ activeTab, onTabChange, user, onCollapse }) {
   const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    const next = !collapsed;
+    setCollapsed(next);
+    onCollapse?.(next);
+  };
 
   const initials = user?.name
     ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
@@ -74,7 +80,7 @@ export default function Sidebar({ activeTab, onTabChange, user }) {
         </div>
         <button
           className={styles.collapseBtn}
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={toggleCollapse}
           aria-label="Toggle sidebar"
         >
           {collapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}

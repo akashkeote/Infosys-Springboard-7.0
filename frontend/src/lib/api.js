@@ -35,12 +35,21 @@ export async function fetchSchemeById(id) {
 }
 
 /**
- * Fetch dashboard analytics stats
+ * Fetch dashboard analytics stats.
+ * Backend returns: { totalSchemes, byState:{...}, byCategory:{...}, byMinistry:{...} }
+ * We enrich it with totalStates / totalCategories / totalMinistries counts so
+ * StatsCards can simply read stats.totalStates etc.
  */
 export async function fetchStats() {
   const res = await fetch(`${BASE_URL}/subsidies/stats`);
   if (!res.ok) throw new Error("Failed to fetch stats");
-  return res.json();
+  const raw = await res.json();
+  return {
+    ...raw,
+    totalStates:      raw.byState    ? Object.keys(raw.byState).length    : 0,
+    totalCategories:  raw.byCategory ? Object.keys(raw.byCategory).length  : 0,
+    totalMinistries:  raw.byMinistry ? Object.keys(raw.byMinistry).length  : 0,
+  };
 }
 
 /**

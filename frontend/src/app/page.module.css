@@ -306,3 +306,56 @@
   .filterRow .select { min-width: unset; width: 100%; }
   .a11yWidget { bottom: 16px; right: 16px; width: 42px; height: 42px; }
 }
+
+/* ─── Officer Quick Stats Row ─── */
+.officerQuickStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.officerStat {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeIn 0.4s var(--ease-out) both;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.officerStat:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.officerStatVal {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.officerStatLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.officerStatNote {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .officerQuickStats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .officerQuickStats { grid-template-columns: 1fr; }
+}
+

@@ -1,5 +1,5 @@
 /* ─── Shared Section Styles ─── */
-.section { margin-bottom: 28px; animation: fadeIn 0.5s ease backwards; }
+.section { margin-top: 32px; margin-bottom: 36px; animation: fadeIn 0.5s ease backwards; }
 
 .sectionTitle {
   font-size: 17px; font-weight: 700; color: var(--text-primary);
@@ -124,7 +124,8 @@
 .flipGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 18px;
+  padding-top: 4px;
 }
 
 .flipCol {
@@ -138,7 +139,7 @@
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
   cursor: pointer;
-  height: 90px;
+  height: 112px;
 }
 
 /* Flip on hover — UMANG pattern */

@@ -1,0 +1,220 @@
+/* ─── UMANG Chatbot — UX4G Purple theme, UMANG API backend ─── */
+
+/* Floating trigger button */
+.trigger {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 10px;
+  background: var(--bg-card, #fff);
+  border: 1.5px solid var(--border-light, #e8e5f0);
+  border-radius: 50px;
+  box-shadow:
+    0 4px 20px rgba(124, 58, 237, 0.22),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  animation: slideUpBtn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.trigger:hover {
+  box-shadow:
+    0 8px 28px rgba(124, 58, 237, 0.32),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.triggerIcon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+  /* tint the UMANG bot icon with a purple hue overlay */
+  filter: hue-rotate(200deg) saturate(1.2);
+}
+
+.triggerFallback {
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--primary-100, #ede9fe);
+  border-radius: 50%;
+}
+
+.triggerLabel {
+  font-family: 'DM Sans', 'Noto Sans', 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-600, #6d28d9);
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
+
+/* ─── Chat window panel ─── */
+.window {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1999;
+  width: 40vw;
+  height: 75dvh;
+  min-width: 320px;
+  max-width: 480px;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  /* Hidden by default */
+  display: none;
+  flex-direction: column;
+  box-shadow:
+    -4px 0 40px rgba(124, 58, 237, 0.18),
+    0 0 0 1px rgba(124, 58, 237, 0.1);
+}
+
+.windowOpen {
+  display: flex;
+  animation: slideUpPanel 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Header bar — UX4G purple gradient */
+.windowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-700, #5b21b6) 0%,
+    var(--primary-500, #7c3aed) 100%
+  );
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.windowBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Sans', 'Noto Sans', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.brandIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2px;
+  /* Keep bot icon colour readable on purple */
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.brandPill {
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 2px 8px;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.4px;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+  font-weight: 600;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.1);
+}
+
+/* Powered-by strip between header and iframe */
+.poweredBy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--primary-50, #f5f3ff);
+  border-bottom: 1px solid var(--primary-100, #ede9fe);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary-600, #6d28d9);
+  letter-spacing: 0.3px;
+}
+
+.poweredByDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary-400, #a78bfa);
+  display: inline-block;
+}
+
+/* Iframe wrapper — clips UMANG's own blue 'askUMANG' header bar */
+.iframeWrap {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  /* ~56 px = height of UMANG's internal header bar */
+  margin-top: 0;
+}
+
+.iframe {
+  width: 100%;
+  /* Push iframe up so UMANG's blue header goes above the clip boundary */
+  margin-top: -56px;
+  /* Compensate height so the chat body still fills the panel */
+  height: calc(100% + 56px);
+  border: none;
+  display: block;
+  background: #fff;
+}
+
+/* ─── Animations ─── */
+@keyframes slideUpBtn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideUpPanel {
+  from { transform: translateY(100%); opacity: 0.6; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .window {
+    width: 92vw;
+    height: 88dvh;
+    right: 4vw;
+  }
+  .trigger {
+    bottom: 18px;
+    right: 14px;
+    padding: 8px 14px 8px 8px;
+  }
+  .triggerLabel { font-size: 12px; }
+}

@@ -26,6 +26,7 @@ import styles from "./page.module.css";
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [schemes, setSchemes] = useState([]);
   const [stats, setStats] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
@@ -171,7 +172,77 @@ export default function Dashboard() {
           </>
         );
 
-      default: // dashboard
+      default: // dashboard — role-aware
+        // Officer / VLE: show admin overview first
+        if (user?.role === "officer" || user?.role === "vle") {
+          return (
+            <>
+              <Header
+                title="Officer Dashboard"
+                subtitle={user?.designation || (user?.role === "vle" ? `VLE — ${user?.cscId || "CSC Operator"}` : "Government Officer Portal")}
+                onSync={handleSync}
+                isSyncing={isSyncing}
+              />
+              <div className="page-content">
+                {/* Officer Welcome Banner */}
+                <div className={styles.welcomeBanner} style={{ background: "linear-gradient(135deg, #1e3a5f 0%, #0f2744 60%, #0a1f35 100%)" }}>
+                  <div className={styles.welcomeDecor}>
+                    <div className={styles.decorCircle1} />
+                    <div className={styles.decorCircle2} />
+                  </div>
+                  <div className={styles.welcomeContent}>
+                    <div className={styles.welcomeBadge} style={{ background: "rgba(251,191,36,0.15)", color: "#fbbf24", border: "1px solid rgba(251,191,36,0.3)" }}>
+                      🏛️ {user?.roleLabel || "Officer"} Portal
+                    </div>
+                    <h2 className={styles.welcomeTitle}>
+                      Welcome, {user?.name?.split(" ")[0] || "Officer"}
+                    </h2>
+                    <p className={styles.welcomeText} style={{ color: "rgba(255,255,255,0.75)" }}>
+                      {user?.designation || "Government of India — Scheme Administration"}
+                      {user?.state && <><br /><span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85em" }}>📍 {user.state}</span></>}
+                    </p>
+                    <div className={styles.welcomeActions}>
+                      <button className="btn btn-primary" onClick={() => setActiveTab("applications")}>
+                        Review Queue
+                      </button>
+                      <button className="btn btn-outline" onClick={() => setActiveTab("disbursement")}>
+                        Disbursements
+                      </button>
+                      <button className="btn btn-ghost" style={{ color: "rgba(255,255,255,0.7)" }} onClick={() => setActiveTab("analytics")}>
+                        Analytics →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Officer Quick-Action Stats */}
+                <div className={styles.officerQuickStats}>
+                  {[
+                    { label: "Pending Verification", value: "24", color: "#f59e0b", note: "Applications awaiting review" },
+                    { label: "Approved Today", value: "8",  color: "#10b981", note: "Funds sanctioned" },
+                    { label: "Disbursed (₹)", value: "12.4L", color: "#6366f1", note: "This month" },
+                    { label: "Fraud Flags", value: "3",  color: "#ef4444", note: "Require immediate action" },
+                  ].map((s) => (
+                    <div key={s.label} className={styles.officerStat}>
+                      <span className={styles.officerStatVal} style={{ color: s.color }}>{s.value}</span>
+                      <span className={styles.officerStatLabel}>{s.label}</span>
+                      <span className={styles.officerStatNote}>{s.note}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <StatsCards stats={stats} loading={statsLoading} />
+
+                <FraudAlertsSection />
+                <QuickLinksSection />
+                <FAQSection />
+              </div>
+              <GovFooter />
+            </>
+          );
+        }
+
+        // Citizen: scheme discovery focused dashboard
         return (
           <>
             <Header
@@ -202,8 +273,8 @@ export default function Dashboard() {
                       <Search size={16} />
                       Explore Schemes
                     </button>
-                    <button className="btn btn-outline" onClick={() => setActiveTab("analytics")}>
-                      View Analytics
+                    <button className="btn btn-outline" onClick={() => setActiveTab("applications")}>
+                      My Applications
                     </button>
                   </div>
                 </div>
@@ -360,19 +431,19 @@ export default function Dashboard() {
 
   return (
     <div className="app-layout">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} user={user} />
-      <main className="main-content">
+      <Sidebar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        user={user}
+        onCollapse={setSidebarCollapsed}
+      />
+      <main className={`main-content${sidebarCollapsed ? " sidebar-collapsed" : ""}`}>
         {renderContent()}
       </main>
 
       {selectedScheme && (
         <SchemeModal scheme={selectedScheme} onClose={() => setSelectedScheme(null)} />
       )}
-
-      {/* UX4G Accessibility Widget */}
-      <button className={styles.a11yWidget} aria-label="Accessibility options" title="Accessibility">
-        <Accessibility size={22} />
-      </button>
     </div>
   );
 }

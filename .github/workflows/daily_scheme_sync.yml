@@ -1,0 +1,122 @@
+name: 🔄 Daily Scheme Sync — myscheme.gov.in
+
+on:
+  # Run daily at 1:30 AM IST (20:00 UTC previous day)
+  schedule:
+    - cron: "0 20 * * *"
+
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Sync mode"
+        required: true
+        default: "normal"
+        type: choice
+        options:
+          - normal
+          - full
+          - dry-run
+
+env:
+  PYTHON_VERSION: "3.11"
+  BACKEND_URL: ${{ secrets.BACKEND_URL }}
+
+jobs:
+  sync-schemes:
+    name: Sync Schemes from MyScheme.gov.in
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ──
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 2. Python setup ──
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      # ── 3. Install dependencies ──
+      - name: 📦 Install Python dependencies
+        run: |
+          pip install requests beautifulsoup4 lxml
+
+      # ── 4. Run the sync script ──
+      - name: 🔄 Run daily_scheme_sync.py
+        working-directory: backend
+        run: |
+          MODE="${{ github.event.inputs.mode || 'normal' }}"
+          echo "Running sync in mode: $MODE"
+          if [ "$MODE" = "full" ]; then
+            python daily_scheme_sync.py --full
+          elif [ "$MODE" = "dry-run" ]; then
+            python daily_scheme_sync.py --dry-run
+          else
+            python daily_scheme_sync.py
+          fi
+
+      # ── 5. Commit updated schemes_real.json ──
+      - name: 📝 Commit updated schemes_real.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GovGrant Sync Bot"
+
+          git add backend/src/main/resources/schemes_real.json
+
+          # Only commit if there are actual changes
+          if git diff --cached --quiet; then
+            echo "✅ No new schemes found. schemes_real.json unchanged."
+          else
+            TIMESTAMP=$(date +'%Y-%m-%d %H:%M UTC')
+            SCHEME_COUNT=$(python -c "import json; data=json.load(open('backend/src/main/resources/schemes_real.json')); print(len(data))")
+            git commit -m "🔄 Auto-sync: $SCHEME_COUNT schemes — $TIMESTAMP [skip ci]"
+            git push
+            echo "✅ Committed and pushed updated schemes_real.json ($SCHEME_COUNT schemes)"
+          fi
+
+      # ── 6. Notify backend to reload data ──
+      - name: 📡 Notify backend to reload schemes
+        if: env.BACKEND_URL != ''
+        run: |
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "${{ env.BACKEND_URL }}/api/subsidies/sync" \
+            -H "Content-Type: application/json" \
+            --connect-timeout 15 \
+            --max-time 30)
+          echo "Backend responded with HTTP $HTTP_STATUS"
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "✅ Backend refreshed successfully"
+          else
+            echo "⚠️ Backend notification returned $HTTP_STATUS (may not be running)"
+          fi
+
+      # ── 7. Upload sync logs as artifact ──
+      - name: 📋 Upload sync logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-logs-${{ github.run_number }}
+          path: backend/sync_logs/
+          retention-days: 14
+
+      # ── 8. Summary ──
+      - name: 📊 Sync Summary
+        if: always()
+        run: |
+          echo "### 🔄 Daily Scheme Sync Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🕐 Run time | $(date +'%Y-%m-%d %H:%M UTC') |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔧 Mode | ${{ github.event.inputs.mode || 'normal (scheduled)' }} |" >> $GITHUB_STEP_SUMMARY
+          if [ -f "backend/src/main/resources/schemes_real.json" ]; then
+            COUNT=$(python3 -c "import json; data=json.load(open('backend/src/main/resources/schemes_real.json')); print(len(data))" 2>/dev/null || echo "unknown")
+            echo "| 📋 Total Schemes | $COUNT |" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "| 📦 Source | myscheme.gov.in |" >> $GITHUB_STEP_SUMMARY

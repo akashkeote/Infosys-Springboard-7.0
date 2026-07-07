@@ -2,94 +2,134 @@
 
 import styles from "./GovFooter.module.css";
 
-/* ─── Inline SVG brand marks matching UX4G 3.0 footer pattern ─── */
-const DigitalIndiaLogo = () => (
-  <svg width="20" height="16" viewBox="0 0 32 24" fill="none">
-    <circle cx="6" cy="12" r="3" fill="var(--primary-500)" />
-    <path d="M10 12C10 7.58 13.58 4 18 4s8 3.58 8 8-3.58 8-8 8" stroke="var(--primary-500)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-    <path d="M14 12c0-2.21 1.79-4 4-4s4 1.79 4 4" stroke="var(--primary-400)" strokeWidth="2" strokeLinecap="round" fill="none" />
-  </svg>
-);
+/**
+ * GovFooter — UMANG-style footer with:
+ *  1. Infinite horizontal marquee of government partner logos
+ *  2. Indian tricolour bar
+ *  3. Info / links section
+ */
 
-const NICLogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="var(--primary-600)" strokeWidth="1.8" strokeLinejoin="round" />
-    <path d="M12 22V12M3 7l9 5 9-5" stroke="var(--primary-500)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const GovInLogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <circle cx="12" cy="12" r="10" stroke="var(--primary-500)" strokeWidth="1.8" />
-    <text x="12" y="16" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--primary-600)" fontFamily="Outfit, sans-serif">@</text>
-  </svg>
-);
-
-const AadhaarLogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <rect x="2" y="4" width="20" height="16" rx="3" stroke="var(--primary-500)" strokeWidth="1.8" />
-    <circle cx="8" cy="12" r="2.5" stroke="var(--primary-400)" strokeWidth="1.5" />
-    <path d="M14 9h5M14 12h4M14 15h3" stroke="var(--primary-500)" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const UPILogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M6 4l4 16" stroke="var(--primary-500)" strokeWidth="2.5" strokeLinecap="round" />
-    <path d="M10 4l4 16" stroke="var(--primary-400)" strokeWidth="2.5" strokeLinecap="round" />
-    <path d="M17 4v16" stroke="var(--primary-600)" strokeWidth="2.5" strokeLinecap="round" />
-  </svg>
-);
-
-const MyGovLogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="var(--primary-500)" strokeWidth="1.8" />
-    <path d="M12 6v4l3 3" stroke="var(--primary-600)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="12" cy="12" r="1.5" fill="var(--primary-500)" />
-  </svg>
-);
-
-const DISHALogo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--primary-500)" strokeWidth="1.8" strokeLinejoin="round" />
-    <path d="M9 12l2 2 4-4" stroke="var(--primary-600)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
+/* Real government portal logo images + fallback SVG colours */
 const GOV_LOGOS = [
-  { name: "Digital India", Logo: DigitalIndiaLogo },
-  { name: "NIC", Logo: NICLogo },
-  { name: "gov.in", Logo: GovInLogo },
-  { name: "Aadhaar", Logo: AadhaarLogo },
-  { name: "UPI", Logo: UPILogo },
-  { name: "myGov", Logo: MyGovLogo },
-  { name: "DISHA", Logo: DISHALogo },
+  {
+    name: "Digital India",
+    img: "https://www.digitalindia.gov.in/content/images/di_logo.svg",
+    fallback: "🇮🇳",
+    href: "https://www.digitalindia.gov.in",
+  },
+  {
+    name: "NIC",
+    img: "https://www.nic.in/wp-content/uploads/2022/02/NIC-logo.png",
+    fallback: "🏛️",
+    href: "https://www.nic.in",
+  },
+  {
+    name: "UMANG",
+    img: "https://web.umang.gov.in/web_new/assets/img/umang_logo.png",
+    fallback: "📱",
+    href: "https://web.umang.gov.in",
+  },
+  {
+    name: "MyScheme",
+    img: "https://www.myscheme.gov.in/images/my_scheme_logo.png",
+    fallback: "📋",
+    href: "https://www.myscheme.gov.in",
+  },
+  {
+    name: "DBT Bharat",
+    img: "https://dbtbharat.gov.in/assets/images/dbtBharatLogo.png",
+    fallback: "💰",
+    href: "https://dbtbharat.gov.in",
+  },
+  {
+    name: "Aadhaar",
+    img: "https://uidai.gov.in/images/aadhaar_logo.png",
+    fallback: "🪪",
+    href: "https://uidai.gov.in",
+  },
+  {
+    name: "PFMS",
+    img: "https://pfms.nic.in/NewDefaultsite/images/logo.png",
+    fallback: "🏦",
+    href: "https://pfms.nic.in",
+  },
+  {
+    name: "India.gov.in",
+    img: "https://india.gov.in/sites/upload_files/npi/files/india-logo-new.png",
+    fallback: "🌐",
+    href: "https://india.gov.in",
+  },
+  {
+    name: "myGov",
+    img: "https://www.mygov.in/sites/default/files/mygov_logo.png",
+    fallback: "🗳️",
+    href: "https://www.mygov.in",
+  },
+  {
+    name: "MeitY",
+    img: "https://www.meity.gov.in/assets/images/meity-new-logo.jpg",
+    fallback: "⚙️",
+    href: "https://www.meity.gov.in",
+  },
 ];
 
+/* Single logo item */
+function LogoItem({ logo }) {
+  return (
+    <a
+      href={logo.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.logoItem}
+      title={logo.name}
+    >
+      <img
+        src={logo.img}
+        alt={logo.name}
+        height={22}
+        style={{ maxWidth: 80, objectFit: "contain", filter: "grayscale(30%)" }}
+        onError={(e) => {
+          /* replace broken img with emoji fallback */
+          const span = document.createElement("span");
+          span.textContent = logo.fallback;
+          span.style.fontSize = "18px";
+          e.target.parentNode.replaceChild(span, e.target);
+        }}
+      />
+      <span className={styles.logoName}>{logo.name}</span>
+    </a>
+  );
+}
+
 export default function GovFooter() {
+  // Duplicate the list twice — seamless marquee loop
+  const doubled = [...GOV_LOGOS, ...GOV_LOGOS];
+
   return (
     <footer className={styles.footer}>
-      <div className={styles.logoStrip}>
-        {GOV_LOGOS.map((logo) => (
-          <div key={logo.name} className={styles.logoItem}>
-            <logo.Logo />
-            <span className={styles.logoName}>{logo.name}</span>
-          </div>
-        ))}
+      {/* ── Infinite marquee ── */}
+      <div className={styles.logoTrack} aria-label="Government partner portals">
+        <div className={styles.logoInner}>
+          {doubled.map((logo, i) => (
+            <LogoItem key={`${logo.name}-${i}`} logo={logo} />
+          ))}
+        </div>
       </div>
 
+      {/* ── Indian tricolour ── */}
       <div className={styles.tricolor}>
         <div className={styles.triSaffron} />
         <div className={styles.triWhite} />
         <div className={styles.triGreen} />
       </div>
 
+      {/* ── Info ── */}
       <div className={styles.info}>
         <p className={styles.infoText}>
-          © 2026 GovGrant Tracker — Government Subsidy & Grant Disbursement Tracking System
+          © 2026 GovGrant Tracker — Government Subsidy &amp; Grant Disbursement Tracking System
         </p>
         <p className={styles.infoSub}>
-          Built with UX4G Design System 3.0 • Infosys Springboard Internship 7.0
+          Built with UX4G Design System 3.0 &bull; Infosys Springboard Virtual Internship 7.0
         </p>
         <div className={styles.links}>
           <a href="#">Terms of Use</a>
@@ -97,6 +137,10 @@ export default function GovFooter() {
           <a href="#">Privacy Policy</a>
           <span>•</span>
           <a href="#">Accessibility</a>
+          <span>•</span>
+          <a href="https://web.umang.gov.in" target="_blank" rel="noopener noreferrer">
+            UMANG Portal
+          </a>
           <span>•</span>
           <a href="#">Contact</a>
         </div>

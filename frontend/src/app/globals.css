@@ -189,20 +189,28 @@ img { max-width: 100%; display: block; }
 }
 
 .main-content {
-  flex: 1;
+  /* offset for fixed sidebar — DO NOT use flex:1 here, the sidebar is fixed */
   margin-left: var(--sidebar-width);
-  transition: margin-left var(--transition-base);
+  min-width: 0; /* prevent flex blowout */
+  width: calc(100vw - var(--sidebar-width));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: margin-left var(--transition-base), width var(--transition-base);
+}
+
+/* When sidebar is collapsed */
+.main-content.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed);
+  width: calc(100vw - var(--sidebar-collapsed));
 }
 
 .page-content {
   flex: 1;
   padding: 24px 28px 40px;
+  /* max-width caps long lines on very wide monitors but aligns LEFT — no auto centering */
   max-width: 1360px;
   width: 100%;
-  margin: 0 auto;
 }
 
 /* ─── UX4G Card Styles ─── */
@@ -434,10 +442,14 @@ img { max-width: 100%; display: block; }
 
 /* ─── Responsive ─── */
 @media (max-width: 1024px) {
-  .main-content { margin-left: 0; }
+  .main-content {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100vw - var(--sidebar-collapsed));
+  }
   .page-content { padding: 20px 16px; }
 }
 
 @media (max-width: 768px) {
+  .main-content { margin-left: 0; width: 100vw; }
   .page-content { padding: 16px 12px; }
 }

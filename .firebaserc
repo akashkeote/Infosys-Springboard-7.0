@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "gov-subsidy-tracker"
-  }
+  },
+  "targets": {
+    "gov-subsidy-tracker": {
+      "hosting": {
+        "govgrant": [
+          "govgrant"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

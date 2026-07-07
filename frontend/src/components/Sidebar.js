@@ -13,6 +13,7 @@ import {
   LogOut,
 } from "lucide-react";
 import styles from "./Sidebar.module.css";
+import { useLang } from "@/lib/i18n";
 
 const getNavItems = (role) => {
   const base = [
@@ -39,12 +40,26 @@ const getNavItems = (role) => {
 
 export default function Sidebar({ activeTab, onTabChange, user, onCollapse }) {
   const [collapsed, setCollapsed] = useState(false);
+  const { t } = useLang();
 
   const toggleCollapse = () => {
     const next = !collapsed;
     setCollapsed(next);
     onCollapse?.(next);
   };
+
+  const navItems = [
+    { id: "dashboard", label: t.dashboard, Icon: LayoutDashboard },
+    { id: "schemes", label: t.allSchemes, Icon: FileText },
+    ...(user?.role === "officer" || user?.role === "vle" ? [
+      { id: "analytics", label: t.analytics, Icon: BarChart3 },
+      { id: "applications", label: user?.role === "officer" ? "Verification Queue" : t.myApplications, Icon: ClipboardList },
+      { id: "disbursement", label: t.disbursement, Icon: IndianRupee },
+    ] : [
+      { id: "applications", label: t.myApplications, Icon: ClipboardList },
+    ]),
+  ];
+
 
   const initials = user?.name
     ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
@@ -90,8 +105,8 @@ export default function Sidebar({ activeTab, onTabChange, user, onCollapse }) {
       {/* Navigation */}
       <nav className={styles.nav}>
         <div className={styles.navSection}>
-          {!collapsed && <span className={styles.navLabel}>Menu</span>}
-          {getNavItems(user?.role).map((item) => (
+          {!collapsed && <span className={styles.navLabel}>MENU</span>}
+          {navItems.map((item) => (
             <button
               key={item.id}
               className={`${styles.navItem} ${activeTab === item.id ? styles.active : ""}`}

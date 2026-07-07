@@ -57,6 +57,16 @@
 
 .logoItem:hover { opacity: 1; }
 
+.logoIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
 .logoName {
   font-family: 'DM Sans', 'Noto Sans', sans-serif;
   font-size: 12px;

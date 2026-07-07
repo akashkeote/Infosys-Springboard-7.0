@@ -24,18 +24,13 @@ import { useState } from "react";
 import styles from "./DashboardSections.module.css";
 
 /* ─── Quick Links Data ─── */
-/* ─── Quick Links Data ─── */
 const QUICK_LINKS = [
-  { name: "MyScheme", desc: "Find all government schemes", url: "https://myscheme.gov.in", logo: "https://www.myscheme.gov.in/favicon.ico", bg: "#1a56db" },
-  { name: "Digital India", desc: "Digital services portal", url: "https://digitalindia.gov.in", logo: "https://digitalindia.gov.in/wp-content/uploads/2023/07/cropped-DI-Logo-32x32.jpg", bg: "#0f6fbe" },
-  { name: "PFMS", desc: "Public Financial Management", url: "https://pfms.nic.in", logo: "https://pfms.nic.in/NewDefaultsite/pfms/img/favicon.ico", bg: "#1a3c6e" },
-  { name: "RTI Portal", desc: "Right to Information", url: "https://rtionline.gov.in", logo: "https://rtionline.gov.in/favicon.ico", bg: "#c0392b" },
-  { name: "DBT Bharat", desc: "Direct Benefit Transfer", url: "https://dbtbharat.gov.in", logo: "https://dbtbharat.gov.in/site/assets/images/favicon.png", bg: "#138808" },
-  { name: "India.gov.in", desc: "National Portal of India", url: "https://india.gov.in", logo: "https://www.india.gov.in/sites/upload_files/npi/files/favicon_0.ico", bg: "#1a3c6e" },
-  { name: "UMANG", desc: "Unified Mobile App for Gov Services", url: "https://web.umang.gov.in", logo: "https://web.umang.gov.in/web_new/assets/img/UMANG_logo.png", bg: "#FF6B35" },
-  { name: "MeitY", desc: "Ministry of Electronics & IT", url: "https://www.meity.gov.in", logo: "https://www.meity.gov.in/sites/all/themes/meity/images/favicon.ico", bg: "#0f6fbe" },
-  { name: "myGov", desc: "Citizens platform by Govt of India", url: "https://www.mygov.in", logo: "https://www.mygov.in/sites/all/themes/mygov/images/favicon.ico", bg: "#FF6600" },
-  { name: "NIC", desc: "National Informatics Centre", url: "https://www.nic.in", logo: "https://www.nic.in/wp-content/uploads/2020/09/cropped-nic-favicon-32x32.png", bg: "#003580" },
+  { name: "MyScheme", desc: "Find all government schemes", url: "https://myscheme.gov.in", Icon: Globe },
+  { name: "Digital India", desc: "Digital services portal", url: "https://digitalindia.gov.in", Icon: Smartphone },
+  { name: "PFMS", desc: "Public Financial Management", url: "https://pfms.nic.in", Icon: CreditCard },
+  { name: "RTI Portal", desc: "Right to Information", url: "https://rtionline.gov.in", Icon: FileSearch },
+  { name: "DBT Bharat", desc: "Direct Benefit Transfer", url: "https://dbtbharat.gov.in", Icon: ShieldCheck },
+  { name: "India.gov.in", desc: "National Portal of India", url: "https://india.gov.in", Icon: BookOpen },
 ];
 
 /* ─── Fraud Alerts Data ─── */
@@ -113,37 +108,8 @@ export function QuickLinksSection() {
             rel="noopener noreferrer"
             className={styles.quickCard}
           >
-            <div
-              className={styles.quickIcon}
-              style={{ background: link.bg + "18", border: `1.5px solid ${link.bg}30` }}
-            >
-              <img
-                src={link.logo}
-                alt={link.name + " logo"}
-                width={24}
-                height={24}
-                style={{ objectFit: "contain", borderRadius: 4 }}
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  e.target.nextSibling.style.display = "flex";
-                }}
-              />
-              <span
-                style={{
-                  display: "none",
-                  width: 24,
-                  height: 24,
-                  borderRadius: 4,
-                  background: link.bg,
-                  color: "#fff",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {link.name[0]}
-              </span>
+            <div className={styles.quickIcon}>
+              <link.Icon size={22} strokeWidth={1.6} />
             </div>
             <div className={styles.quickInfo}>
               <span className={styles.quickName}>{link.name}</span>

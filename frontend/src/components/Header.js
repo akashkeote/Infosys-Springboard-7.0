@@ -1,26 +1,17 @@
 "use client";
 
-import { RefreshCw, Bell, Sun, Moon, Globe2, Languages } from "lucide-react";
+import { RefreshCw, Bell, Sun, Moon, Languages } from "lucide-react";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
-
-/* ─── UMANG-style Theme & Lang Context ─── */
-const LANGS = [
-  { code: "en", label: "English", native: "EN" },
-  { code: "hi", label: "हिंदी", native: "HI" },
-  { code: "mr", label: "मराठी", native: "MR" },
-  { code: "ta", label: "தமிழ்", native: "TA" },
-  { code: "te", label: "తెలుగు", native: "TE" },
-  { code: "bn", label: "বাংলা", native: "BN" },
-  { code: "gu", label: "ગુજરાતી", native: "GU" },
-  { code: "kn", label: "ಕನ್ನಡ", native: "KN" },
-];
+import { useLang, LANGS } from "@/lib/i18n";
 
 export default function Header({ title, subtitle, onSync, isSyncing }) {
+  const { lang, setLang, t } = useLang();
   const [isDark, setIsDark] = useState(false);
   const [fontSize, setFontSize] = useState("normal");
   const [showLangMenu, setShowLangMenu] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(LANGS[0]);
+
+  const selectedLang = LANGS.find((l) => l.code === lang) || LANGS[0];
 
   // Apply theme — UMANG pattern: data-theme on html element
   useEffect(() => {
@@ -98,13 +89,13 @@ export default function Header({ title, subtitle, onSync, isSyncing }) {
               </button>
               {showLangMenu && (
                 <div className={styles.langMenu}>
-                  {LANGS.map((lang) => (
+                  {LANGS.map((l) => (
                     <button
-                      key={lang.code}
-                      className={`${styles.langItem} ${selectedLang.code === lang.code ? styles.langItemActive : ""}`}
-                      onClick={() => { setSelectedLang(lang); setShowLangMenu(false); }}
+                      key={l.code}
+                      className={`${styles.langItem} ${selectedLang.code === l.code ? styles.langItemActive : ""}`}
+                      onClick={() => { setLang(l.code); setShowLangMenu(false); }}
                     >
-                      {lang.label}
+                      {l.label}
                     </button>
                   ))}
                 </div>

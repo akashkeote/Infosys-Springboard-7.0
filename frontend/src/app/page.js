@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Search, ChevronDown, X, Accessibility } from "lucide-react";
+import { Search, ChevronDown, X } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import StatsCards from "@/components/StatsCards";
@@ -21,9 +21,11 @@ import {
   CATEGORY_LIST,
   MINISTRY_LIST,
 } from "@/lib/api";
+import { useLang } from "@/lib/i18n";
 import styles from "./page.module.css";
 
 export default function Dashboard() {
+  const { t } = useLang();
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -38,9 +40,9 @@ export default function Dashboard() {
 
   // Filters
   const [search, setSearch] = useState("");
-  const [state, setState] = useState("All States");
-  const [category, setCategory] = useState("All Categories");
-  const [ministry, setMinistry] = useState("All Ministries");
+  const [state, setState] = useState(t.allStates);
+  const [category, setCategory] = useState(t.allCategories);
+  const [ministry, setMinistry] = useState(t.allMinistries);
   const [limit, setLimit] = useState(20);
 
   const searchTimeout = useRef(null);
@@ -115,7 +117,7 @@ export default function Dashboard() {
   };
 
   const hasActiveFilters =
-    search || state !== "All States" || category !== "All Categories" || ministry !== "All Ministries";
+    search || state !== t.allStates || category !== t.allCategories || ministry !== t.allMinistries;
 
   // ─── Tab Content ───
   const renderContent = () => {
@@ -123,7 +125,7 @@ export default function Dashboard() {
       case "analytics":
         return (
           <>
-            <Header title="Analytics" subtitle="Data-driven insights across government schemes" />
+            <Header title={t.dashboard} subtitle={stats ? `${stats.totalSchemes?.toLocaleString()} ${t.allSchemes.toLowerCase()}` : t.dashboardSub} onSync={handleSync} isSyncing={isSyncing} />
             <div className="page-content">
               <StatsCards stats={stats} loading={statsLoading} />
               <div style={{ marginTop: 24 }}>
@@ -286,9 +288,9 @@ export default function Dashboard() {
               <CategoryFlipCards />
 
               <div className={styles.sectionHeader} style={{ marginTop: 28 }}>
-                <h2 className={styles.sectionTitle}>Recent Schemes</h2>
+                <h2 className={styles.sectionTitle}>{t.recentSchemes}</h2>
                 <button className="btn btn-ghost btn-sm" onClick={() => setActiveTab("schemes")}>
-                  View All →
+                  {t.viewAll}
                 </button>
               </div>
 
@@ -313,7 +315,7 @@ export default function Dashboard() {
             <input
               className={`input ${styles.searchInput}`}
               type="text"
-              placeholder="Search for schemes, ministries, keywords..."
+              placeholder={t.searchPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               id="search-schemes"
@@ -362,9 +364,9 @@ export default function Dashboard() {
         <div className={styles.errorCard}>
           <div className={styles.errorIcon}>!</div>
           <h3>Backend Unavailable</h3>
-          <p>The server is currently waking up from sleep mode (Free Tier) or is unreachable.</p>
+          <p>{t.backendDown}</p>
           <code className={styles.errorCode}>{error}</code>
-          <button className="btn btn-primary btn-sm" style={{ marginTop: 12 }} onClick={() => loadSchemes()}>Retry</button>
+          <button className="btn btn-primary btn-sm" style={{ marginTop: 12 }} onClick={() => loadSchemes()}>{t.retry}</button>
         </div>
       );
     }

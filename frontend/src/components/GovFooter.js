@@ -12,64 +12,64 @@ import styles from "./GovFooter.module.css";
 /* Real government portal logo images + fallback SVG colours */
 const GOV_LOGOS = [
   {
-    name: "Digital India",
-    img: "https://www.digitalindia.gov.in/content/images/di_logo.svg",
-    fallback: "🇮🇳",
-    href: "https://www.digitalindia.gov.in",
-  },
-  {
-    name: "NIC",
-    img: "https://www.nic.in/wp-content/uploads/2022/02/NIC-logo.png",
-    fallback: "🏛️",
-    href: "https://www.nic.in",
-  },
-  {
     name: "UMANG",
-    img: "https://web.umang.gov.in/web_new/assets/img/umang_logo.png",
-    fallback: "📱",
+    img: "https://web.umang.gov.in/web_new/assets/img/UMANG_logo.png",
+    fallback: "📱", color: "#FF6B35",
     href: "https://web.umang.gov.in",
   },
   {
     name: "MyScheme",
-    img: "https://www.myscheme.gov.in/images/my_scheme_logo.png",
-    fallback: "📋",
+    img: "https://www.myscheme.gov.in/favicon.ico",
+    fallback: "📋", color: "#1a56db",
     href: "https://www.myscheme.gov.in",
   },
   {
     name: "DBT Bharat",
-    img: "https://dbtbharat.gov.in/assets/images/dbtBharatLogo.png",
-    fallback: "💰",
+    img: "https://dbtbharat.gov.in/site/assets/images/favicon.png",
+    fallback: "💰", color: "#138808",
     href: "https://dbtbharat.gov.in",
   },
   {
     name: "Aadhaar",
-    img: "https://uidai.gov.in/images/aadhaar_logo.png",
-    fallback: "🪪",
+    img: "https://uidai.gov.in/favicon.ico",
+    fallback: "🪪", color: "#003580",
     href: "https://uidai.gov.in",
   },
   {
     name: "PFMS",
-    img: "https://pfms.nic.in/NewDefaultsite/images/logo.png",
-    fallback: "🏦",
+    img: "https://pfms.nic.in/NewDefaultsite/pfms/img/favicon.ico",
+    fallback: "🏦", color: "#1a3c6e",
     href: "https://pfms.nic.in",
   },
   {
     name: "India.gov.in",
-    img: "https://india.gov.in/sites/upload_files/npi/files/india-logo-new.png",
-    fallback: "🌐",
+    img: "https://www.india.gov.in/sites/upload_files/npi/files/favicon_0.ico",
+    fallback: "🌐", color: "#1a3c6e",
     href: "https://india.gov.in",
   },
   {
     name: "myGov",
-    img: "https://www.mygov.in/sites/default/files/mygov_logo.png",
-    fallback: "🗳️",
+    img: "https://www.mygov.in/sites/all/themes/mygov/images/favicon.ico",
+    fallback: "🗳️", color: "#FF6600",
     href: "https://www.mygov.in",
   },
   {
     name: "MeitY",
-    img: "https://www.meity.gov.in/assets/images/meity-new-logo.jpg",
-    fallback: "⚙️",
+    img: "https://www.meity.gov.in/sites/all/themes/meity/images/favicon.ico",
+    fallback: "⚙️", color: "#0f6fbe",
     href: "https://www.meity.gov.in",
+  },
+  {
+    name: "NIC",
+    img: "https://www.nic.in/wp-content/uploads/2020/09/cropped-nic-favicon-32x32.png",
+    fallback: "🏛️", color: "#003580",
+    href: "https://www.nic.in",
+  },
+  {
+    name: "Digital India",
+    img: "https://digitalindia.gov.in/wp-content/uploads/2023/07/cropped-DI-Logo-32x32.jpg",
+    fallback: "🇮🇳", color: "#0f6fbe",
+    href: "https://digitalindia.gov.in",
   },
 ];
 
@@ -83,19 +83,24 @@ function LogoItem({ logo }) {
       className={styles.logoItem}
       title={logo.name}
     >
-      <img
-        src={logo.img}
-        alt={logo.name}
-        height={22}
-        style={{ maxWidth: 80, objectFit: "contain", filter: "grayscale(30%)" }}
-        onError={(e) => {
-          /* replace broken img with emoji fallback */
-          const span = document.createElement("span");
-          span.textContent = logo.fallback;
-          span.style.fontSize = "18px";
-          e.target.parentNode.replaceChild(span, e.target);
-        }}
-      />
+      <span
+        className={styles.logoIconWrap}
+        style={{ background: logo.color + "18", border: `1.5px solid ${logo.color}30` }}
+      >
+        <img
+          src={logo.img}
+          alt={logo.name}
+          width={20}
+          height={20}
+          style={{ objectFit: "contain", borderRadius: 3 }}
+          onError={(e) => {
+            e.target.style.display = "none";
+            const fb = e.target.nextSibling;
+            if (fb) fb.style.display = "block";
+          }}
+        />
+        <span style={{ display: "none", fontSize: 16 }}>{logo.fallback}</span>
+      </span>
       <span className={styles.logoName}>{logo.name}</span>
     </a>
   );

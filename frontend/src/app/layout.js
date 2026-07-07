@@ -1,5 +1,6 @@
 import "./globals.css";
 import UMANGChatbot from "@/components/UMANGChatbot";
+import { LangProvider } from "@/lib/i18n";
 
 export const metadata = {
   title: "GovGrant Tracker — Government Subsidy & Grant Dashboard",
@@ -27,8 +28,10 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#7c3aed" />
       </head>
       <body>
-        {children}
-        <UMANGChatbot />
+        <LangProvider>
+          {children}
+          <UMANGChatbot />
+        </LangProvider>
       </body>
     </html>
   );

@@ -67,14 +67,14 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GovGrant Sync Bot"
 
-          git add backend/src/main/resources/schemes_real.json
+          git add backend/src/main/resources/data/schemes_real.json
 
           # Only commit if there are actual changes
           if git diff --cached --quiet; then
             echo "✅ No new schemes found. schemes_real.json unchanged."
           else
             TIMESTAMP=$(date +'%Y-%m-%d %H:%M UTC')
-            SCHEME_COUNT=$(python -c "import json; data=json.load(open('backend/src/main/resources/schemes_real.json')); print(len(data))")
+            SCHEME_COUNT=$(python -c "import json; data=json.load(open('backend/src/main/resources/data/schemes_real.json')); print(len(data))")
             git commit -m "🔄 Auto-sync: $SCHEME_COUNT schemes — $TIMESTAMP [skip ci]"
             git push
             echo "✅ Committed and pushed updated schemes_real.json ($SCHEME_COUNT schemes)"
@@ -115,8 +115,8 @@ jobs:
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| 🕐 Run time | $(date +'%Y-%m-%d %H:%M UTC') |" >> $GITHUB_STEP_SUMMARY
           echo "| 🔧 Mode | ${{ github.event.inputs.mode || 'normal (scheduled)' }} |" >> $GITHUB_STEP_SUMMARY
-          if [ -f "backend/src/main/resources/schemes_real.json" ]; then
-            COUNT=$(python3 -c "import json; data=json.load(open('backend/src/main/resources/schemes_real.json')); print(len(data))" 2>/dev/null || echo "unknown")
+          if [ -f "backend/src/main/resources/data/schemes_real.json" ]; then
+            COUNT=$(python3 -c "import json; data=json.load(open('backend/src/main/resources/data/schemes_real.json')); print(len(data))" 2>/dev/null || echo "unknown")
             echo "| 📋 Total Schemes | $COUNT |" >> $GITHUB_STEP_SUMMARY
           fi
           echo "| 📦 Source | myscheme.gov.in |" >> $GITHUB_STEP_SUMMARY

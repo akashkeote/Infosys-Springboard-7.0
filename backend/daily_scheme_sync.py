@@ -29,7 +29,7 @@ from pathlib import Path
 
 # ─── Configuration ───
 SCRIPT_DIR = Path(__file__).parent
-SCHEMES_FILE = SCRIPT_DIR / "src" / "main" / "resources" / "schemes_real.json"
+SCHEMES_FILE = SCRIPT_DIR / "src" / "main" / "resources" / "data" / "schemes_real.json"
 SYNC_LOG_DIR = SCRIPT_DIR / "sync_logs"
 BACKEND_API = "http://127.0.0.1:8080/api/subsidies/sync"
 
@@ -115,80 +115,191 @@ def fetch_myscheme_page(page=1, keyword=""):
 
 
 def fetch_scheme_detail(slug):
-    """Fetch detailed info for a specific scheme."""
+    """
+    Fetch FULL rich detail for a scheme by its slug.
+    This returns the complete data matching our JSON format:
+    eligibilityCriteria, benefits, applicationProcess, documentsRequired, etc.
+    """
+    if not slug:
+        return None
     try:
+        # Try the detail endpoint
         url = f"{MYSCHEME_DETAIL_API}/{slug}"
         resp = session.get(url, timeout=30)
         resp.raise_for_status()
-        return resp.json()
-    except:
+        data = resp.json()
+        # API may return {data: {...}} or directly the scheme object
+        if isinstance(data, dict) and "data" in data:
+            return data["data"]
+        return data
+    except Exception as e:
+        log.debug(f"Detail fetch failed for '{slug}': {e}")
         return None
+
+
+def map_detail_to_schema(item, slug=""):
+    """
+    Map a myscheme.gov.in API response (search OR detail) to our JSON schema.
+    Tries detail-level fields first, falls back to search-level fields.
+    Matches the format of schemes_real.json exactly.
+    """
+    # Resolve documents — can be a list of strings or list of dicts
+    raw_docs = item.get("documentsRequired", item.get("documents", []))
+    if isinstance(raw_docs, list):
+        docs = [
+            d.get("documentName", d) if isinstance(d, dict) else str(d)
+            for d in raw_docs
+        ]
+    else:
+        docs = []
+
+    # Resolve grant amount
+    grant = (
+        item.get("grantAmount")
+        or item.get("benefitAmount")
+        or item.get("amount")
+        or ""
+    )
+    if isinstance(grant, (int, float)):
+        grant = f"₹{grant:,.0f}" if grant > 0 else ""
+
+    # Resolve eligibility
+    elig = (
+        item.get("eligibilityCriteria")
+        or item.get("eligibility")
+        or item.get("eligibilityDescription")
+        or ""
+    )
+    if isinstance(elig, list):
+        elig = "\n".join(str(e) for e in elig)
+
+    # Resolve application process
+    app_process = (
+        item.get("applicationProcess")
+        or item.get("howToApply")
+        or item.get("applicationProcedure")
+        or ""
+    )
+    if isinstance(app_process, list):
+        app_process = "\n".join(str(s) for s in app_process)
+
+    # Resolve benefits
+    benefits = item.get("benefits", item.get("schemeBenefits", ""))
+    if isinstance(benefits, list):
+        benefits = "\n".join(f"- {b}" for b in benefits)
+
+    # Resolve income limit
+    income = (
+        item.get("incomeLimit")
+        or item.get("annualIncomeLimit")
+        or item.get("income_criteria")
+        or "Not specified"
+    )
+
+    return {
+        "id": slug or item.get("slug", ""),
+        "title": (
+            item.get("schemeName")
+            or item.get("title")
+            or item.get("name")
+            or ""
+        ).strip(),
+        "description": (
+            item.get("briefDescription")
+            or item.get("description")
+            or item.get("schemeDescription")
+            or ""
+        ),
+        "ministry": item.get("ministry", item.get("nodalMinistry", "")),
+        "category": item.get("category", item.get("schemeCategory", "General")),
+        "state": item.get("state", item.get("location", "All")),
+        "amount": 0.0,
+        "eligibilityCriteria": elig,
+        "benefits": benefits,
+        "applicationProcess": app_process,
+        "documentsRequired": docs,
+        "applicationDeadline": item.get("deadline", item.get("endDate", None)),
+        "startDate": item.get("startDate", item.get("launchDate", None)),
+        "isActive": True,
+        "isExpired": False,
+        "incomeLimit": income,
+        "grantAmount": str(grant) if grant else "",
+        "schemeStatus": item.get("status", item.get("schemeStatus", "Active")),
+        "applicationUrl": item.get("url", item.get("applicationUrl", "")),
+        "sourceUrl": f"https://www.myscheme.gov.in/schemes/{slug}" if slug else "",
+        "lastSyncedAt": datetime.now().isoformat(),
+    }
 
 
 def scrape_myscheme_search(max_pages=10, keyword=""):
     """
-    Scrape schemes from myscheme.gov.in using their search page.
-    Falls back to HTML scraping if API is not available.
+    Discover scheme slugs from myscheme.gov.in search API.
+    For each new scheme found, calls the DETAIL API to get rich data
+    (eligibility, benefits, applicationProcess, documentsRequired, etc.)
+    so it matches our existing schemes_real.json format exactly.
     """
     log.info(f"Fetching schemes from myscheme.gov.in (max {max_pages} pages)...")
-    
+
     all_schemes = []
-    seen_titles = set()
-    
-    # Method 1: Try the API endpoint
+    seen_slugs = set()
+
     for page in range(1, max_pages + 1):
         log.info(f"  Fetching page {page}/{max_pages}...")
         data = fetch_myscheme_page(page, keyword)
-        
+
         if data is None:
-            log.warning(f"  Page {page} failed. Trying HTML fallback...")
+            log.warning(f"  Page {page} failed, stopping.")
             break
-        
-        # Parse API response
+
+        # Normalise the response envelope
         schemes_list = data.get("data", data.get("schemes", data.get("results", [])))
         if isinstance(data, list):
             schemes_list = data
-        
+
         if not schemes_list:
             log.info(f"  No more schemes on page {page}. Done.")
             break
-        
+
         for item in schemes_list:
-            title = item.get("schemeName", item.get("title", item.get("name", "")))
-            if not title or title.lower() in seen_titles:
+            slug = (
+                item.get("slug")
+                or item.get("schemeId")
+                or item.get("id")
+                or ""
+            ).strip().lower()
+
+            title = (
+                item.get("schemeName")
+                or item.get("title")
+                or item.get("name")
+                or ""
+            ).strip()
+
+            if not title or slug in seen_slugs:
                 continue
-            
-            seen_titles.add(title.lower())
-            
-            scheme = {
-                "title": title.strip(),
-                "description": item.get("briefDescription", item.get("description", "")),
-                "ministry": item.get("ministry", item.get("nodalMinistry", "Unknown")),
-                "state": item.get("state", item.get("location", "All")),
-                "category": item.get("category", item.get("schemeCategory", "General")),
-                "schemeStatus": item.get("status", "Active"),
-                "applicationDeadline": item.get("deadline", item.get("endDate", "")),
-                "startDate": item.get("startDate", item.get("launchDate", "")),
-                "eligibilityCriteria": item.get("eligibility", item.get("eligibilityCriteria", "")),
-                "benefits": item.get("benefits", ""),
-                "applicationProcess": item.get("applicationProcess", item.get("howToApply", "")),
-                "documentsRequired": item.get("documentsRequired", []),
-                "grantAmount": item.get("amount", item.get("grantAmount", "")),
-                "applicationUrl": item.get("url", item.get("applicationUrl", "")),
-                "incomeLimit": item.get("incomeLimit", ""),
-                "sourceUrl": f"https://www.myscheme.gov.in/schemes/{item.get('slug', '')}",
-                "lastSyncedAt": datetime.now().isoformat(),
-            }
-            
+
+            seen_slugs.add(slug)
+
+            # --- Fetch detail to get rich data matching our JSON schema ---
+            detail = fetch_scheme_detail(slug)
+            if detail:
+                scheme = map_detail_to_schema(detail, slug=slug)
+                log.debug(f"    [detail OK] {title}")
+            else:
+                # Fallback: use search-level summary only
+                scheme = map_detail_to_schema(item, slug=slug)
+                log.debug(f"    [summary only] {title}")
+
             all_schemes.append(scheme)
-        
-        time.sleep(1.5)  # Rate limiting — be respectful
-    
-    # Method 2: HTML scraping fallback
+            time.sleep(0.8)  # Rate limiting between detail calls
+
+        time.sleep(1.5)  # Rate limiting between pages
+
+    # HTML fallback if API returned nothing at all
     if not all_schemes:
         log.info("API returned no data. Trying HTML scraping fallback...")
         all_schemes = scrape_html_fallback(max_pages)
-    
+
     log.info(f"Fetched {len(all_schemes)} schemes from myscheme.gov.in")
     return all_schemes
 

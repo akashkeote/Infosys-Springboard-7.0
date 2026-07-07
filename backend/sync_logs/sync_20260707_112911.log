@@ -1,0 +1,11 @@
+2026-07-07 11:29:11,308 [INFO] [MODE] Dry run — no changes will be saved
+2026-07-07 11:29:11,437 [INFO] Loaded 4680 existing schemes from schemes_real.json
+2026-07-07 11:29:11,437 [INFO] Fetching schemes from myscheme.gov.in (max 10 pages)...
+2026-07-07 11:29:11,438 [INFO]   Fetching page 1/10...
+2026-07-07 11:29:11,780 [ERROR] API request failed (page 1): 404 Client Error: Not Found for url: https://www.myscheme.gov.in/api/search?keyword=&page=1&limit=50&sort=relevance
+2026-07-07 11:29:11,780 [WARNING]   Page 1 failed, stopping.
+2026-07-07 11:29:11,780 [INFO] API returned no data. Trying HTML scraping fallback...
+2026-07-07 11:29:11,911 [INFO]   No cards found on page 1
+2026-07-07 11:29:11,911 [INFO] Fetched 0 schemes from myscheme.gov.in
+2026-07-07 11:29:11,911 [WARNING] No schemes fetched. The API may be down or blocking requests.
+2026-07-07 11:29:11,911 [INFO] Tip: Try running scraper_production.py with Selenium for full scrape.

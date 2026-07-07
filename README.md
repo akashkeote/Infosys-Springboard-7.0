@@ -93,3 +93,17 @@ If you want to run this project on your local machine, follow these instructions
 
 ## 🔐 Security Notice
 This project uses automated GitHub Actions for deployment. Environment variables and Service Account Keys (`.env`, `serviceAccountKey.json`) are strictly added to `.gitignore` to prevent credential exposure. Deployment pipelines rely on GitHub Secrets for secure credential injection.
+
+---
+
+## ☁️ Render Keep-Alive Cron Job
+If your Spring Boot backend is hosted on Render's free tier, you can keep it awake by pinging the public health endpoint every 10 to 14 minutes.
+
+1. Deploy the backend on Render as usual.
+2. Add a cron job in the Render dashboard with a schedule like `*/10 * * * *`.
+3. Set `KEEPALIVE_URL` to your deployed URL, for example `https://your-app.onrender.com/api/health`.
+4. Use this command for the cron job:
+
+  `bash render-keepalive.sh`
+
+The endpoint used by the cron job is [backend/src/main/java/com/example/backend/controllers/HealthController.java](backend/src/main/java/com/example/backend/controllers/HealthController.java), and the reusable ping script is [render-keepalive.sh](render-keepalive.sh).

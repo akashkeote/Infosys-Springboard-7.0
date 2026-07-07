@@ -16,3 +16,5 @@ node_modules/
 !storage.rules
 *.sst
 *.meta
+out/
+frontend/out/
